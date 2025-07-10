@@ -143,52 +143,36 @@ export function ReviewTaskModal({ isOpen, onClose, taskData }: ReviewTaskModalPr
               </div>
             </div>
           ) : (
-            // Original Content with Tabs
-            <Tabs defaultValue="draft" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="draft">AI Draft Content</TabsTrigger>
-                <TabsTrigger value="original">Original Email</TabsTrigger>
-              </TabsList>
+            // AI Draft Content Only
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold">AI Draft Content</h3>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setIsEditing(!isEditing)}
+                  className="gap-2"
+                >
+                  <Edit className="h-4 w-4" />
+                  {isEditing ? "Stop Editing" : "Edit"}
+                </Button>
+              </div>
               
-              <TabsContent value="draft" className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-semibold">Draft Content for Review</h3>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setIsEditing(!isEditing)}
-                    className="gap-2"
-                  >
-                    <Edit className="h-4 w-4" />
-                    {isEditing ? "Stop Editing" : "Edit"}
-                  </Button>
-                </div>
-                
-                <div className="bg-muted/20 rounded-lg p-4 border">
-                  {isEditing ? (
-                    <Textarea
-                      value={editedContent}
-                      onChange={(e) => setEditedContent(e.target.value)}
-                      className="min-h-[200px] font-mono text-sm"
-                      placeholder="Edit the draft content..."
-                    />
-                  ) : (
-                    <pre className="whitespace-pre-wrap font-mono text-sm">
-                      {editedContent}
-                    </pre>
-                  )}
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="original" className="space-y-4">
-                <h3 className="text-lg font-semibold">Original Email</h3>
-                <div className="bg-muted/20 rounded-lg p-4 border">
+              <div className="bg-muted/20 rounded-lg p-4 border">
+                {isEditing ? (
+                  <Textarea
+                    value={editedContent}
+                    onChange={(e) => setEditedContent(e.target.value)}
+                    className="min-h-[200px] font-mono text-sm"
+                    placeholder="Edit the draft content..."
+                  />
+                ) : (
                   <pre className="whitespace-pre-wrap font-mono text-sm">
-                    {taskData.originalEmail}
+                    {editedContent}
                   </pre>
-                </div>
-              </TabsContent>
-            </Tabs>
+                )}
+              </div>
+            </div>
           )}
 
           {/* Footer Actions */}
