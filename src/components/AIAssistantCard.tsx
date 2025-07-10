@@ -1,23 +1,21 @@
-import { useState } from "react"
-import { Clock, Eye, Edit, Trash2, ThumbsUp, ThumbsDown, Loader2 } from "lucide-react"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Progress } from "@/components/ui/progress"
-import { Badge } from "@/components/ui/badge"
-import { cn } from "@/lib/utils"
-
+import { useState } from "react";
+import { Clock, Eye, Edit, Trash2, ThumbsUp, ThumbsDown, Loader2 } from "lucide-react";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 interface AIAssistantCardProps {
-  title: string
-  subtitle: string
-  description: string | React.ReactNode
-  progress: number
-  progressColor?: string
-  primaryAction: string
-  onPrimaryAction: () => void
-  onRemove?: () => void
-  className?: string
+  title: string;
+  subtitle: string;
+  description: string | React.ReactNode;
+  progress: number;
+  progressColor?: string;
+  primaryAction: string;
+  onPrimaryAction: () => void;
+  onRemove?: () => void;
+  className?: string;
 }
-
 export function AIAssistantCard({
   title,
   subtitle,
@@ -29,22 +27,17 @@ export function AIAssistantCard({
   onRemove,
   className
 }: AIAssistantCardProps) {
-  const [isLoading, setIsLoading] = useState(false)
-
+  const [isLoading, setIsLoading] = useState(false);
   const handlePrimaryAction = async () => {
-    setIsLoading(true)
-    await new Promise(resolve => setTimeout(resolve, 2000)) // 2 second delay
-    onPrimaryAction()
-    setIsLoading(false)
-  }
-
-  return (
-    <Card className={cn("relative", className)}>
-      {isLoading && (
-        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm z-10 flex items-center justify-center rounded-lg">
+    setIsLoading(true);
+    await new Promise(resolve => setTimeout(resolve, 2000)); // 2 second delay
+    onPrimaryAction();
+    setIsLoading(false);
+  };
+  return <Card className={cn("relative", className)}>
+      {isLoading && <div className="absolute inset-0 bg-background/80 backdrop-blur-sm z-10 flex items-center justify-center rounded-lg">
           <Loader2 className="h-6 w-6 animate-spin text-primary" />
-        </div>
-      )}
+        </div>}
       
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
@@ -55,13 +48,7 @@ export function AIAssistantCard({
               <p className="text-sm text-muted-foreground">{subtitle}</p>
             </div>
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            className="bg-background border-border text-foreground hover:bg-accent"
-            onClick={handlePrimaryAction}
-            disabled={isLoading}
-          >
+          <Button variant="outline" size="sm" className="bg-background border-border text-foreground hover:bg-accent" onClick={handlePrimaryAction} disabled={isLoading}>
             {primaryAction}
           </Button>
         </div>
@@ -74,16 +61,12 @@ export function AIAssistantCard({
         
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm">
-            <span className="text-muted-foreground">Progress</span>
+            
             <Badge variant="secondary" className="text-xs">
               {progress}%
             </Badge>
           </div>
-          <Progress
-            value={progress}
-            className="h-2"
-            indicatorClassName={progressColor}
-          />
+          <Progress value={progress} className="h-2" indicatorClassName={progressColor} />
         </div>
         
         <div className="flex items-center gap-2">
@@ -93,12 +76,7 @@ export function AIAssistantCard({
           <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
             <Edit className="h-4 w-4" />
           </Button>
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            className="h-8 w-8 p-0"
-            onClick={onRemove}
-          >
+          <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={onRemove}>
             <Trash2 className="h-4 w-4" />
           </Button>
           <div className="flex-1" />
@@ -110,6 +88,5 @@ export function AIAssistantCard({
           </Button>
         </div>
       </CardContent>
-    </Card>
-  )
+    </Card>;
 }
