@@ -139,64 +139,86 @@ Contractor XYZ`,
     </div>
   )
 
-  // Chatbot collapsed view
+  // Half-screen minimized view
   if (!isExpanded) {
     return (
-      <div className="fixed bottom-4 right-4 z-50">
-        <div className="bg-background border border-border rounded-lg shadow-lg w-80 max-h-96 overflow-hidden">
-          {/* Chatbot Header */}
+      <div className="fixed right-0 top-0 bottom-0 z-50 w-1/2">
+        <div className="bg-background border-l border-border shadow-lg h-full flex flex-col">
+          {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-border bg-muted/50">
             <div className="flex items-center gap-2">
               <MessageSquare className="h-5 w-5 text-primary" />
-              <h3 className="font-semibold text-sm">AI Assistant</h3>
-              <Badge variant="secondary" className="text-xs">
+              <h3 className="font-semibold">AI Assistant</h3>
+              <Badge variant="secondary">
                 {pendingCount}
               </Badge>
             </div>
             <Button
               variant="ghost"
               size="sm"
-              className="h-6 w-6 p-0"
               onClick={() => setIsExpanded(true)}
+              className="gap-2"
             >
               <Maximize2 className="h-4 w-4" />
+              Expand
             </Button>
           </div>
           
-          {/* Chatbot Content - Preview */}
-          <div className="p-4 space-y-3 max-h-80 overflow-y-auto">
+          {/* Content */}
+          <div className="flex-1 p-4 space-y-4 overflow-y-auto">
             {showStatusCard && (
-              <div className="text-sm border-l-2 border-l-primary pl-3 py-2 bg-muted/30 rounded-r cursor-pointer hover:bg-muted/50 transition-colors"
+              <div className="border border-border rounded-lg p-4 bg-card hover:bg-muted/50 transition-colors cursor-pointer"
                    onClick={() => setIsExpanded(true)}>
-                <p className="font-medium">Project Status Report Request</p>
-                <p className="text-xs text-muted-foreground">Project A - Priority: High</p>
+                <div className="flex items-start justify-between mb-2">
+                  <h4 className="font-medium">Project Status Report Request</h4>
+                  <Badge variant="outline" className="text-xs">High</Badge>
+                </div>
+                <p className="text-sm text-muted-foreground mb-3">
+                  Create and send the standard health report to the customer, ABC LLC. Needed for meeting today.
+                </p>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Paperclip className="h-4 w-4" />
+                  <span>Project_A_Health_Report_Jan2025.pdf</span>
+                </div>
+                <div className="mt-3 flex items-center gap-2">
+                  <div className="flex-1 bg-muted rounded-full h-2">
+                    <div className="bg-green-500 h-2 rounded-full" style={{ width: '92%' }}></div>
+                  </div>
+                  <span className="text-xs text-muted-foreground">92%</span>
+                </div>
               </div>
             )}
             
             {showRFICard && (
-              <div className="text-sm border-l-2 border-l-orange-500 pl-3 py-2 bg-muted/30 rounded-r cursor-pointer hover:bg-muted/50 transition-colors"
+              <div className="border border-border rounded-lg p-4 bg-card hover:bg-muted/50 transition-colors cursor-pointer"
                    onClick={() => setIsExpanded(true)}>
-                <p className="font-medium">Create RFI</p>
-                <p className="text-xs text-muted-foreground">Bridge Renovation - Priority: High</p>
+                <div className="flex items-start justify-between mb-2">
+                  <h4 className="font-medium">Suggested Action: Create RFI</h4>
+                  <Badge variant="outline" className="text-xs">High</Badge>
+                </div>
+                <p className="text-sm text-muted-foreground mb-2">
+                  AI detected a technical query from Contractor XYZ. Extracted details:
+                </p>
+                <ul className="space-y-1 text-sm text-muted-foreground mb-3">
+                  <li>• Pay Item: #12-345</li>
+                  <li>• Location: Pier 4, Section B</li>
+                  <li>• Issue: Rebar placement conflict</li>
+                </ul>
+                <div className="mt-3 flex items-center gap-2">
+                  <div className="flex-1 bg-muted rounded-full h-2">
+                    <div className="bg-orange-500 h-2 rounded-full" style={{ width: '78%' }}></div>
+                  </div>
+                  <span className="text-xs text-muted-foreground">78%</span>
+                </div>
               </div>
             )}
             
             {!showStatusCard && !showRFICard && (
-              <div className="text-center py-4 text-muted-foreground">
-                <p className="text-sm">All tasks completed!</p>
+              <div className="text-center py-12 text-muted-foreground">
+                <p className="text-lg">All tasks completed!</p>
+                <p className="text-sm mt-2">No pending AI assistant actions.</p>
               </div>
             )}
-            
-            <div className="text-center pt-2">
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={() => setIsExpanded(true)}
-                className="text-xs"
-              >
-                View All Tasks
-              </Button>
-            </div>
           </div>
         </div>
       </div>
