@@ -149,92 +149,39 @@ Contractor XYZ`,
           
           {/* Content */}
           <div className="flex-1 p-4 space-y-4 overflow-y-auto">
-            {showStatusCard && <div className="border border-border rounded-lg p-4 bg-card hover:bg-muted/50 transition-colors">
-                <div className="flex items-start justify-between mb-2">
-                  <h4 className="font-medium">Project Status Report Request</h4>
-                  <Badge variant="outline" className="text-xs">High</Badge>
-                </div>
-                <p className="text-sm text-muted-foreground mb-3">
-                  Create and send the standard health report to the customer, ABC LLC. Needed for meeting today.
-                </p>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
-                  <Paperclip className="h-4 w-4" />
-                  <span>Project_A_Health_Report_Jan2025.pdf</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Button 
-                    size="sm" 
-                    variant="outline" 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleReview("Project Status Report Request");
-                    }}
-                    className="text-xs"
-                  >
-                    Review
-                  </Button>
-                  <Button 
-                    size="sm" 
-                    variant="outline" 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setShowStatusCard(false);
-                      setPendingCount(prev => prev - 1);
-                      toast({
-                        title: "🗑️ Task Removed",
-                        description: "Project Status Report Request has been deleted."
-                      });
-                    }}
-                    className="text-xs"
-                  >
-                    Delete
-                  </Button>
-                </div>
-              </div>}
+            {showStatusCard && <AIAssistantCard 
+              title="Project Status Report Request" 
+              subtitle="Project A" 
+              description={statusReportDescription} 
+              priority="High" 
+              onPrimaryAction={handleStatusReportAction} 
+              onRemove={() => {
+                setShowStatusCard(false);
+                setPendingCount(prev => prev - 1);
+                toast({
+                  title: "🗑️ Task Removed",
+                  description: "Project Status Report Request has been deleted."
+                });
+              }}
+              className="animate-fade-in" 
+            />}
             
-            {showRFICard && <div className="border border-border rounded-lg p-4 bg-card hover:bg-muted/50 transition-colors">
-                <div className="flex items-start justify-between mb-2">
-                  <h4 className="font-medium">Suggested Action: Create RFI</h4>
-                  <Badge variant="outline" className="text-xs">High</Badge>
-                </div>
-                <p className="text-sm text-muted-foreground mb-2">
-                  AI detected a technical query from Contractor XYZ. Extracted details:
-                </p>
-                <ul className="space-y-1 text-sm text-muted-foreground mb-3">
-                  <li>• Pay Item: #12-345</li>
-                  <li>• Location: Pier 4, Section B</li>
-                  <li>• Issue: Rebar placement conflict</li>
-                </ul>
-                <div className="flex items-center gap-2">
-                  <Button 
-                    size="sm" 
-                    variant="outline" 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleReview("Suggested Action: Create RFI");
-                    }}
-                    className="text-xs"
-                  >
-                    Review
-                  </Button>
-                  <Button 
-                    size="sm" 
-                    variant="outline" 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setShowRFICard(false);
-                      setPendingCount(prev => prev - 1);
-                      toast({
-                        title: "🗑️ Task Removed",
-                        description: "RFI creation task has been deleted."
-                      });
-                    }}
-                    className="text-xs"
-                  >
-                    Delete
-                  </Button>
-                </div>
-              </div>}
+            {showRFICard && <AIAssistantCard 
+              title="Suggested Action: Create RFI" 
+              subtitle="Bridge Renovation" 
+              description={rfiDescription} 
+              priority="High" 
+              onPrimaryAction={handleRFIAction} 
+              onRemove={() => {
+                setShowRFICard(false);
+                setPendingCount(prev => prev - 1);
+                toast({
+                  title: "🗑️ Task Removed",
+                  description: "RFI creation task has been deleted."
+                });
+              }}
+              className="animate-fade-in" 
+            />}
             
             {!showStatusCard && !showRFICard && <div className="text-center py-12 text-muted-foreground">
                 <p className="text-lg">All tasks completed!</p>
