@@ -25,16 +25,14 @@ interface ReviewTaskModalProps {
 export function ReviewTaskModal({ isOpen, onClose, taskData }: ReviewTaskModalProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(taskData.draftContent);
+  
+  const isRFITask = taskData.detectedIntent === "Create RFI";
 
   const handleFinalize = () => {
     // Handle finalize action
     onClose();
   };
 
-  const handleDiscard = () => {
-    // Handle discard action
-    onClose();
-  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -93,52 +91,75 @@ export function ReviewTaskModal({ isOpen, onClose, taskData }: ReviewTaskModalPr
             </div>
           </div>
 
-          {/* Content Tabs */}
-          <Tabs defaultValue="draft" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="draft">AI Draft Content</TabsTrigger>
-              <TabsTrigger value="original">Original Email</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="draft" className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold">Draft Content for Review</h3>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setIsEditing(!isEditing)}
-                  className="gap-2"
-                >
-                  <Edit className="h-4 w-4" />
-                  {isEditing ? "Stop Editing" : "Edit"}
-                </Button>
-              </div>
-              
-              <div className="bg-muted/20 rounded-lg p-4 border">
-                {isEditing ? (
+          {/* Content Section */}
+          {isRFITask ? (
+            // RFI Content
+            <div className="space-y-6">
+              <div className="space-y-4">
+                <div>
+                  <p className="text-sm text-muted-foreground mb-2">Contractor</p>
+                  <p className="font-medium">Contractor XYZ</p>
+                </div>
+                
+                <div className="space-y-2">
+                  <p className="text-sm text-muted-foreground">Question</p>
                   <Textarea
-                    value={editedContent}
-                    onChange={(e) => setEditedContent(e.target.value)}
-                    className="min-h-[200px] font-mono text-sm"
-                    placeholder="Edit the draft content..."
+                    value="Per your request, please provide clarification on the rebar placement conflict at Pier 4, Section B, concerning Pay Item #12-345."
+                    rows={4}
+                    className="resize-none"
+                    readOnly
                   />
-                ) : (
+                </div>
+              </div>
+            </div>
+          ) : (
+            // Original Content with Tabs
+            <Tabs defaultValue="draft" className="w-full">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="draft">AI Draft Content</TabsTrigger>
+                <TabsTrigger value="original">Original Email</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="draft" className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold">Draft Content for Review</h3>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setIsEditing(!isEditing)}
+                    className="gap-2"
+                  >
+                    <Edit className="h-4 w-4" />
+                    {isEditing ? "Stop Editing" : "Edit"}
+                  </Button>
+                </div>
+                
+                <div className="bg-muted/20 rounded-lg p-4 border">
+                  {isEditing ? (
+                    <Textarea
+                      value={editedContent}
+                      onChange={(e) => setEditedContent(e.target.value)}
+                      className="min-h-[200px] font-mono text-sm"
+                      placeholder="Edit the draft content..."
+                    />
+                  ) : (
+                    <pre className="whitespace-pre-wrap font-mono text-sm">
+                      {editedContent}
+                    </pre>
+                  )}
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="original" className="space-y-4">
+                <h3 className="text-lg font-semibold">Original Email</h3>
+                <div className="bg-muted/20 rounded-lg p-4 border">
                   <pre className="whitespace-pre-wrap font-mono text-sm">
-                    {editedContent}
+                    {taskData.originalEmail}
                   </pre>
-                )}
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="original" className="space-y-4">
-              <h3 className="text-lg font-semibold">Original Email</h3>
-              <div className="bg-muted/20 rounded-lg p-4 border">
-                <pre className="whitespace-pre-wrap font-mono text-sm">
-                  {taskData.originalEmail}
-                </pre>
-              </div>
-            </TabsContent>
-          </Tabs>
+                </div>
+              </TabsContent>
+            </Tabs>
+          )}
 
           {/* Footer Actions */}
           <div className="flex items-center justify-between pt-4 border-t">
@@ -153,7 +174,7 @@ export function ReviewTaskModal({ isOpen, onClose, taskData }: ReviewTaskModalPr
               </Button>
               <Button onClick={handleFinalize} className="bg-primary text-primary-foreground hover:bg-primary/90">
                 <span className="mr-2">📋</span>
-                Send
+                {isRFITask ? "Create RFI" : "Send"}
               </Button>
             </div>
           </div>
