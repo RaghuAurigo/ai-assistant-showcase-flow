@@ -11,7 +11,7 @@ interface AIAssistantCardProps {
   description: string | React.ReactNode;
   progress: number;
   progressColor?: string;
-  primaryAction: string;
+  priority: "High" | "Medium" | "Low";
   onPrimaryAction: () => void;
   onReview?: () => void;
   onEdit?: () => void;
@@ -24,7 +24,7 @@ export function AIAssistantCard({
   description,
   progress,
   progressColor = "bg-primary",
-  primaryAction,
+  priority,
   onPrimaryAction,
   onReview,
   onEdit,
@@ -52,9 +52,13 @@ export function AIAssistantCard({
               <p className="text-sm text-muted-foreground">{subtitle}</p>
             </div>
           </div>
-          <Button variant="outline" size="sm" className="bg-background border-border text-foreground hover:bg-accent" onClick={handlePrimaryAction} disabled={isLoading}>
-            {primaryAction}
-          </Button>
+          <Badge 
+            variant={priority === "High" ? "destructive" : priority === "Medium" ? "default" : "secondary"}
+            className="cursor-pointer"
+            onClick={handlePrimaryAction}
+          >
+            Priority: {priority}
+          </Badge>
         </div>
       </CardHeader>
       

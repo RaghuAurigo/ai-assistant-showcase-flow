@@ -72,16 +72,20 @@ export default function AIAssistantPanel() {
               <AIAssistantCard
                 title="Project Status Report Request"
                 subtitle="Project A"
-                description="Create and send the standard health report to the customer, ABC LLC."
+                description="Create and send the standard health report to the customer, ABC LLC. Needed for meeting today."
                 progress={92}
                 progressColor="bg-green-500"
-                primaryAction="Generate & Send"
+                priority="High"
                 onPrimaryAction={handleStatusReportAction}
                 onReview={() => handleReview("Project Status Report Request")}
                 onEdit={() => handleEdit("Project Status Report Request")}
                 onRemove={() => {
                   setShowStatusCard(false)
                   setPendingCount(prev => prev - 1)
+                  toast({
+                    title: "🗑️ Task Removed",
+                    description: "Project Status Report Request has been deleted.",
+                  })
                 }}
                 className="animate-fade-in"
               />
@@ -94,13 +98,17 @@ export default function AIAssistantPanel() {
                 description={rfiDescription}
                 progress={78}
                 progressColor="bg-orange-500"
-                primaryAction="Create RFI Draft"
+                priority="High"
                 onPrimaryAction={handleRFIAction}
                 onReview={() => handleReview("Suggested Action: Create RFI")}
                 onEdit={() => handleEdit("Suggested Action: Create RFI")}
                 onRemove={() => {
                   setShowRFICard(false)
                   setPendingCount(prev => prev - 1)
+                  toast({
+                    title: "🗑️ Task Removed",
+                    description: "RFI creation task has been deleted.",
+                  })
                 }}
                 className="animate-fade-in"
               />
