@@ -59,15 +59,7 @@ export function AIAssistantCard({
           {description}
         </div>
         
-        <div className="space-y-2">
-          <div className="flex items-center justify-between text-sm">
-            
-            <Badge variant="secondary" className="text-xs">
-              {progress}%
-            </Badge>
-          </div>
-          <Progress value={progress} className="h-2" indicatorClassName={progressColor} />
-        </div>
+        
         
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
