@@ -149,7 +149,7 @@ Contractor XYZ`,
           
           {/* Content */}
           <div className="flex-1 p-4 space-y-4 overflow-y-auto">
-            {showStatusCard && <div className="border border-border rounded-lg p-4 bg-card hover:bg-muted/50 transition-colors cursor-pointer" onClick={() => setIsExpanded(true)}>
+            {showStatusCard && <div className="border border-border rounded-lg p-4 bg-card hover:bg-muted/50 transition-colors">
                 <div className="flex items-start justify-between mb-2">
                   <h4 className="font-medium">Project Status Report Request</h4>
                   <Badge variant="outline" className="text-xs">High</Badge>
@@ -157,17 +157,42 @@ Contractor XYZ`,
                 <p className="text-sm text-muted-foreground mb-3">
                   Create and send the standard health report to the customer, ABC LLC. Needed for meeting today.
                 </p>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
                   <Paperclip className="h-4 w-4" />
                   <span>Project_A_Health_Report_Jan2025.pdf</span>
                 </div>
-                <div className="mt-3 flex items-center gap-2">
-                  
-                  
+                <div className="flex items-center gap-2">
+                  <Button 
+                    size="sm" 
+                    variant="outline" 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleReview("Project Status Report Request");
+                    }}
+                    className="text-xs"
+                  >
+                    Review
+                  </Button>
+                  <Button 
+                    size="sm" 
+                    variant="outline" 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowStatusCard(false);
+                      setPendingCount(prev => prev - 1);
+                      toast({
+                        title: "🗑️ Task Removed",
+                        description: "Project Status Report Request has been deleted."
+                      });
+                    }}
+                    className="text-xs"
+                  >
+                    Delete
+                  </Button>
                 </div>
               </div>}
             
-            {showRFICard && <div className="border border-border rounded-lg p-4 bg-card hover:bg-muted/50 transition-colors cursor-pointer" onClick={() => setIsExpanded(true)}>
+            {showRFICard && <div className="border border-border rounded-lg p-4 bg-card hover:bg-muted/50 transition-colors">
                 <div className="flex items-start justify-between mb-2">
                   <h4 className="font-medium">Suggested Action: Create RFI</h4>
                   <Badge variant="outline" className="text-xs">High</Badge>
@@ -180,9 +205,34 @@ Contractor XYZ`,
                   <li>• Location: Pier 4, Section B</li>
                   <li>• Issue: Rebar placement conflict</li>
                 </ul>
-                <div className="mt-3 flex items-center gap-2">
-                  
-                  
+                <div className="flex items-center gap-2">
+                  <Button 
+                    size="sm" 
+                    variant="outline" 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleReview("Suggested Action: Create RFI");
+                    }}
+                    className="text-xs"
+                  >
+                    Review
+                  </Button>
+                  <Button 
+                    size="sm" 
+                    variant="outline" 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowRFICard(false);
+                      setPendingCount(prev => prev - 1);
+                      toast({
+                        title: "🗑️ Task Removed",
+                        description: "RFI creation task has been deleted."
+                      });
+                    }}
+                    className="text-xs"
+                  >
+                    Delete
+                  </Button>
                 </div>
               </div>}
             
