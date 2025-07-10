@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { Paperclip } from "lucide-react"
 import { AIAssistantCard } from "@/components/AIAssistantCard"
 import { Badge } from "@/components/ui/badge"
 import { useToast } from "@/hooks/use-toast"
@@ -38,12 +39,15 @@ export default function AIAssistantPanel() {
     })
   }
 
-  const handleEdit = (title: string) => {
-    toast({
-      title: `✏️ Editing ${title}`,
-      description: "Opening edit mode...",
-    })
-  }
+  const statusReportDescription = (
+    <div>
+      <p className="mb-3">Create and send the standard health report to the customer, ABC LLC. Needed for meeting today.</p>
+      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <Paperclip className="h-4 w-4" />
+        <span>Project_A_Health_Report_Jan2025.pdf</span>
+      </div>
+    </div>
+  )
 
   const rfiDescription = (
     <div>
@@ -72,13 +76,12 @@ export default function AIAssistantPanel() {
               <AIAssistantCard
                 title="Project Status Report Request"
                 subtitle="Project A"
-                description="Create and send the standard health report to the customer, ABC LLC. Needed for meeting today."
+                description={statusReportDescription}
                 progress={92}
                 progressColor="bg-green-500"
                 priority="High"
                 onPrimaryAction={handleStatusReportAction}
                 onReview={() => handleReview("Project Status Report Request")}
-                onEdit={() => handleEdit("Project Status Report Request")}
                 onRemove={() => {
                   setShowStatusCard(false)
                   setPendingCount(prev => prev - 1)
@@ -101,7 +104,6 @@ export default function AIAssistantPanel() {
                 priority="High"
                 onPrimaryAction={handleRFIAction}
                 onReview={() => handleReview("Suggested Action: Create RFI")}
-                onEdit={() => handleEdit("Suggested Action: Create RFI")}
                 onRemove={() => {
                   setShowRFICard(false)
                   setPendingCount(prev => prev - 1)

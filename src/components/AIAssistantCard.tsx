@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Clock, Eye, Edit, Trash2, ThumbsUp, ThumbsDown, Loader2 } from "lucide-react";
+import { Clock, Eye, Trash2, ThumbsUp, ThumbsDown, Loader2 } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -14,7 +14,6 @@ interface AIAssistantCardProps {
   priority: "High" | "Medium" | "Low";
   onPrimaryAction: () => void;
   onReview?: () => void;
-  onEdit?: () => void;
   onRemove?: () => void;
   className?: string;
 }
@@ -27,7 +26,6 @@ export function AIAssistantCard({
   priority,
   onPrimaryAction,
   onReview,
-  onEdit,
   onRemove,
   className
 }: AIAssistantCardProps) {
@@ -73,10 +71,6 @@ export function AIAssistantCard({
           <Button variant="ghost" size="sm" className="h-8 px-3" onClick={onReview}>
             <Eye className="h-4 w-4 mr-1" />
             Review
-          </Button>
-          <Button variant="ghost" size="sm" className="h-8 px-3" onClick={onEdit}>
-            <Edit className="h-4 w-4 mr-1" />
-            Edit
           </Button>
           <Button variant="ghost" size="sm" className="h-8 px-3" onClick={onRemove}>
             <Trash2 className="h-4 w-4 mr-1" />
