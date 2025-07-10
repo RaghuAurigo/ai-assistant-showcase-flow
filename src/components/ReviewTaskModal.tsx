@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { X, Edit } from "lucide-react";
+import { X, Edit, Paperclip, Upload } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -171,6 +171,43 @@ export function ReviewTaskModal({ isOpen, onClose, taskData }: ReviewTaskModalPr
                     {editedContent}
                   </pre>
                 )}
+              </div>
+              
+              {/* Attachments Section */}
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold">Attachments</h3>
+                  <Button variant="outline" size="sm" className="gap-2">
+                    <Upload className="h-4 w-4" />
+                    Add Attachment
+                  </Button>
+                </div>
+                
+                <div className="bg-muted/20 rounded-lg p-4 border">
+                  <div className="space-y-3">
+                    {/* Sample attachments */}
+                    <div className="flex items-center gap-3 p-2 rounded border bg-background">
+                      <Paperclip className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm font-medium">Project_Health_Report_Q4.pdf</span>
+                      <Badge variant="secondary" className="text-xs">PDF</Badge>
+                      <div className="ml-auto text-xs text-muted-foreground">2.3 MB</div>
+                    </div>
+                    
+                    <div className="flex items-center gap-3 p-2 rounded border bg-background">
+                      <Paperclip className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm font-medium">Budget_Variance_Analysis.xlsx</span>
+                      <Badge variant="secondary" className="text-xs">XLSX</Badge>
+                      <div className="ml-auto text-xs text-muted-foreground">1.8 MB</div>
+                    </div>
+                    
+                    <div className="flex items-center gap-3 p-2 rounded border bg-background">
+                      <Paperclip className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm font-medium">Site_Photos_Latest.zip</span>
+                      <Badge variant="secondary" className="text-xs">ZIP</Badge>
+                      <div className="ml-auto text-xs text-muted-foreground">15.2 MB</div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           )}
