@@ -86,10 +86,6 @@ export function AIAssistantCard({
             <Trash2 className="h-4 w-4 mr-1" />
             Delete
           </Button>
-          <Button variant="ghost" size="sm" className="h-8 px-3">
-            <Paperclip className="h-4 w-4 mr-1" />
-            Attachment to be added
-          </Button>
           <div className="flex-1" />
           <Button 
             variant="ghost" 
