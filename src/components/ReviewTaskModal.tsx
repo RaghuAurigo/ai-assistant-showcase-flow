@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 interface ReviewTaskModalProps {
   isOpen: boolean;
   onClose: () => void;
+  fullscreen?: boolean;
   taskData: {
     emailSubject: string;
     project: string;
@@ -22,7 +23,7 @@ interface ReviewTaskModalProps {
   };
 }
 
-export function ReviewTaskModal({ isOpen, onClose, taskData }: ReviewTaskModalProps) {
+export function ReviewTaskModal({ isOpen, onClose, fullscreen = false, taskData }: ReviewTaskModalProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(taskData.draftContent);
   
@@ -36,7 +37,7 @@ export function ReviewTaskModal({ isOpen, onClose, taskData }: ReviewTaskModalPr
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className={fullscreen ? "max-w-full max-h-full w-screen h-screen overflow-y-auto m-0 rounded-none" : "max-w-4xl max-h-[90vh] overflow-y-auto"}>
         <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
           <div className="flex items-center gap-2">
             <div className="h-6 w-6 rounded-full bg-muted flex items-center justify-center">

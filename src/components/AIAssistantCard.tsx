@@ -1,20 +1,17 @@
 import { useState } from "react";
-import { Clock, Eye, Trash2, ThumbsUp, ThumbsDown, Loader2 } from "lucide-react";
+import { Clock, Eye, Trash2, ThumbsUp, ThumbsDown, Loader2, Paperclip } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
+import { ReviewTaskModal } from "./ReviewTaskModal";
 interface AIAssistantCardProps {
   title: string;
   subtitle: string;
   description: string | React.ReactNode;
-  progress: number;
-  progressColor?: string;
   priority: "High" | "Medium" | "Low";
   onPrimaryAction: () => void;
-  onReview?: () => void;
   onRemove?: () => void;
   className?: string;
 }
@@ -22,16 +19,14 @@ export function AIAssistantCard({
   title,
   subtitle,
   description,
-  progress,
-  progressColor = "bg-primary",
   priority,
   onPrimaryAction,
-  onReview,
   onRemove,
   className
 }: AIAssistantCardProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [thumbsUpClicked, setThumbsUpClicked] = useState(false);
+  const [showReviewModal, setShowReviewModal] = useState(false);
   const { toast } = useToast();
   
   const handlePrimaryAction = async () => {
@@ -48,6 +43,10 @@ export function AIAssistantCard({
       duration: 3000,
     });
     setTimeout(() => setThumbsUpClicked(false), 300);
+  };
+
+  const handleReview = () => {
+    setShowReviewModal(true);
   };
   return <Card className={cn("relative", className)}>
       {isLoading && <div className="absolute inset-0 bg-background/80 backdrop-blur-sm z-10 flex items-center justify-center rounded-lg">
@@ -78,16 +77,18 @@ export function AIAssistantCard({
           {description}
         </div>
         
-        
-        
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="sm" className="h-8 px-3" onClick={onReview}>
+          <Button variant="ghost" size="sm" className="h-8 px-3" onClick={handleReview}>
             <Eye className="h-4 w-4 mr-1" />
             Review
           </Button>
           <Button variant="ghost" size="sm" className="h-8 px-3" onClick={onRemove}>
             <Trash2 className="h-4 w-4 mr-1" />
             Delete
+          </Button>
+          <Button variant="ghost" size="sm" className="h-8 px-3">
+            <Paperclip className="h-4 w-4 mr-1" />
+            Attachment to be added
           </Button>
           <div className="flex-1" />
           <Button 
@@ -106,5 +107,21 @@ export function AIAssistantCard({
           </Button>
         </div>
       </CardContent>
+
+      <ReviewTaskModal
+        isOpen={showReviewModal}
+        onClose={() => setShowReviewModal(false)}
+        fullscreen={true}
+        taskData={{
+          emailSubject: title,
+          project: subtitle,
+          detectedIntent: title.includes("RFI") ? "Create RFI" : title.includes("Status") ? "Create Status Report" : "Create Health Report",
+          confidence: 85,
+          proposedAction: `Generate ${title}`,
+          draftContent: typeof description === 'string' ? description : title,
+          originalEmail: "Original email content here...",
+          saveLocation: `/documents/${title.toLowerCase().replace(/\s+/g, '-')}`
+        }}
+      />
     </Card>;
 }

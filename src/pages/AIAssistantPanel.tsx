@@ -255,11 +255,8 @@ Contractor XYZ`,
                   title="Project Status Report Request"
                   subtitle="Project A"
                   description={statusReportDescription}
-                  progress={92}
-                  progressColor="bg-green-500"
                   priority="High"
                   onPrimaryAction={handleStatusReportAction}
-                  onReview={() => handleReview("Project Status Report Request")}
                   onRemove={() => {
                     setShowStatusCard(false)
                     setPendingCount(prev => prev - 1)
@@ -277,11 +274,8 @@ Contractor XYZ`,
                   title="Suggested Action: Create RFI"
                   subtitle="Bridge Renovation"
                   description={rfiDescription}
-                  progress={78}
-                  progressColor="bg-orange-500"
                   priority="High"
                   onPrimaryAction={handleRFIAction}
-                  onReview={() => handleReview("Suggested Action: Create RFI")}
                   onRemove={() => {
                     setShowRFICard(false)
                     setPendingCount(prev => prev - 1)
