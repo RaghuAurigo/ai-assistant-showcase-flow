@@ -1,8 +1,9 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { Paperclip } from "lucide-react"
+import { Paperclip, Maximize2, Minimize2, MessageSquare } from "lucide-react"
 import { AIAssistantCard } from "@/components/AIAssistantCard"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { useToast } from "@/hooks/use-toast"
 
 export default function AIAssistantPanel() {
@@ -11,6 +12,7 @@ export default function AIAssistantPanel() {
   const [pendingCount, setPendingCount] = useState(3)
   const [showStatusCard, setShowStatusCard] = useState(true)
   const [showRFICard, setShowRFICard] = useState(true)
+  const [isExpanded, setIsExpanded] = useState(false)
 
   const handleStatusReportAction = () => {
     toast({
@@ -60,15 +62,91 @@ export default function AIAssistantPanel() {
     </div>
   )
 
+  // Chatbot collapsed view
+  if (!isExpanded) {
+    return (
+      <div className="fixed bottom-4 right-4 z-50">
+        <div className="bg-background border border-border rounded-lg shadow-lg w-80 max-h-96 overflow-hidden">
+          {/* Chatbot Header */}
+          <div className="flex items-center justify-between p-4 border-b border-border bg-muted/50">
+            <div className="flex items-center gap-2">
+              <MessageSquare className="h-5 w-5 text-primary" />
+              <h3 className="font-semibold text-sm">AI Assistant</h3>
+              <Badge variant="secondary" className="text-xs">
+                {pendingCount}
+              </Badge>
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-6 w-6 p-0"
+              onClick={() => setIsExpanded(true)}
+            >
+              <Maximize2 className="h-4 w-4" />
+            </Button>
+          </div>
+          
+          {/* Chatbot Content - Preview */}
+          <div className="p-4 space-y-3 max-h-80 overflow-y-auto">
+            {showStatusCard && (
+              <div className="text-sm border-l-2 border-l-primary pl-3 py-2 bg-muted/30 rounded-r cursor-pointer hover:bg-muted/50 transition-colors"
+                   onClick={() => setIsExpanded(true)}>
+                <p className="font-medium">Project Status Report Request</p>
+                <p className="text-xs text-muted-foreground">Project A - Priority: High</p>
+              </div>
+            )}
+            
+            {showRFICard && (
+              <div className="text-sm border-l-2 border-l-orange-500 pl-3 py-2 bg-muted/30 rounded-r cursor-pointer hover:bg-muted/50 transition-colors"
+                   onClick={() => setIsExpanded(true)}>
+                <p className="font-medium">Create RFI</p>
+                <p className="text-xs text-muted-foreground">Bridge Renovation - Priority: High</p>
+              </div>
+            )}
+            
+            {!showStatusCard && !showRFICard && (
+              <div className="text-center py-4 text-muted-foreground">
+                <p className="text-sm">All tasks completed!</p>
+              </div>
+            )}
+            
+            <div className="text-center pt-2">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => setIsExpanded(true)}
+                className="text-xs"
+              >
+                View All Tasks
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Full expanded view
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8 max-w-2xl">
+    <div className="fixed inset-0 z-50 bg-background">
+      <div className="container mx-auto px-4 py-8 max-w-2xl h-full overflow-y-auto">
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
             <h1 className="text-3xl font-bold text-foreground">AI Assistant</h1>
-            <Badge variant="secondary" className="text-sm">
-              {pendingCount} pending
-            </Badge>
+            <div className="flex items-center gap-2">
+              <Badge variant="secondary" className="text-sm">
+                {pendingCount} pending
+              </Badge>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setIsExpanded(false)}
+                className="gap-2"
+              >
+                <Minimize2 className="h-4 w-4" />
+                Minimize
+              </Button>
+            </div>
           </div>
           
           <div className="space-y-4">
