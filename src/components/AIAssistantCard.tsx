@@ -13,6 +13,8 @@ interface AIAssistantCardProps {
   progressColor?: string;
   primaryAction: string;
   onPrimaryAction: () => void;
+  onReview?: () => void;
+  onEdit?: () => void;
   onRemove?: () => void;
   className?: string;
 }
@@ -24,6 +26,8 @@ export function AIAssistantCard({
   progressColor = "bg-primary",
   primaryAction,
   onPrimaryAction,
+  onReview,
+  onEdit,
   onRemove,
   className
 }: AIAssistantCardProps) {
@@ -62,10 +66,10 @@ export function AIAssistantCard({
         
         
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+          <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={onReview}>
             <Eye className="h-4 w-4" />
           </Button>
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+          <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={onEdit}>
             <Edit className="h-4 w-4" />
           </Button>
           <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={onRemove}>

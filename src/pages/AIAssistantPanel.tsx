@@ -31,6 +31,20 @@ export default function AIAssistantPanel() {
     })
   }
 
+  const handleReview = (title: string) => {
+    toast({
+      title: `📋 Reviewing ${title}`,
+      description: "Opening review details...",
+    })
+  }
+
+  const handleEdit = (title: string) => {
+    toast({
+      title: `✏️ Editing ${title}`,
+      description: "Opening edit mode...",
+    })
+  }
+
   const rfiDescription = (
     <div>
       <p className="mb-2">AI detected a technical query from Contractor XYZ. Extracted details:</p>
@@ -63,6 +77,8 @@ export default function AIAssistantPanel() {
                 progressColor="bg-green-500"
                 primaryAction="Generate & Send"
                 onPrimaryAction={handleStatusReportAction}
+                onReview={() => handleReview("Project Status Report Request")}
+                onEdit={() => handleEdit("Project Status Report Request")}
                 onRemove={() => {
                   setShowStatusCard(false)
                   setPendingCount(prev => prev - 1)
@@ -80,6 +96,8 @@ export default function AIAssistantPanel() {
                 progressColor="bg-orange-500"
                 primaryAction="Create RFI Draft"
                 onPrimaryAction={handleRFIAction}
+                onReview={() => handleReview("Suggested Action: Create RFI")}
+                onEdit={() => handleEdit("Suggested Action: Create RFI")}
                 onRemove={() => {
                   setShowRFICard(false)
                   setPendingCount(prev => prev - 1)
