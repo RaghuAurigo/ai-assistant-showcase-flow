@@ -96,19 +96,49 @@ export function ReviewTaskModal({ isOpen, onClose, taskData }: ReviewTaskModalPr
             // RFI Content
             <div className="space-y-6">
               <div className="space-y-4">
-                <div>
-                  <p className="text-sm text-muted-foreground mb-2">Contractor</p>
-                  <p className="font-medium">Contractor XYZ</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-sm text-muted-foreground mb-2">Contractor</p>
+                    <p className="font-medium">Contractor XYZ</p>
+                  </div>
+                  
+                  <div>
+                    <p className="text-sm text-muted-foreground mb-2">Priority</p>
+                    <div className="flex items-center gap-2">
+                      <Badge variant="destructive" className="bg-red-500 text-white">High</Badge>
+                    </div>
+                  </div>
                 </div>
                 
                 <div className="space-y-2">
-                  <p className="text-sm text-muted-foreground">Question</p>
+                  <p className="text-sm text-muted-foreground">Question/Clarifications Required</p>
                   <Textarea
                     value="Per your request, please provide clarification on the rebar placement conflict at Pier 4, Section B, concerning Pay Item #12-345."
                     rows={4}
                     className="resize-none"
                     readOnly
                   />
+                </div>
+
+                {/* Impact Assessment */}
+                <div className="bg-muted/20 rounded-lg p-4 border">
+                  <h4 className="font-semibold mb-4">Impact Assessment</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <p className="text-sm text-muted-foreground mb-2">Impact on Scope</p>
+                      <Badge variant="outline" className="bg-yellow-100 text-yellow-800 border-yellow-300">Medium</Badge>
+                    </div>
+                    
+                    <div>
+                      <p className="text-sm text-muted-foreground mb-2">Impact to Schedule</p>
+                      <Badge variant="outline" className="bg-red-100 text-red-800 border-red-300">High</Badge>
+                    </div>
+                    
+                    <div>
+                      <p className="text-sm text-muted-foreground mb-2">Impact of Budget</p>
+                      <Badge variant="outline" className="bg-green-100 text-green-800 border-green-300">Low</Badge>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
