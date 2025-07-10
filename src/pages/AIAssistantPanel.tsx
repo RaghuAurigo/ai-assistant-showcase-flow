@@ -15,6 +15,7 @@ export default function AIAssistantPanel() {
   const [showRFICard, setShowRFICard] = useState(true)
   const [isExpanded, setIsExpanded] = useState(false)
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false)
+  const [currentReviewTask, setCurrentReviewTask] = useState<string>("")
 
   const handleStatusReportAction = () => {
     toast({
@@ -37,17 +38,18 @@ export default function AIAssistantPanel() {
   }
 
   const handleReview = (title: string) => {
-    if (title === "Project Status Report Request") {
-      setIsReviewModalOpen(true);
+    if (title === "Project Status Report Request" || title === "Suggested Action: Create RFI") {
+      setCurrentReviewTask(title)
+      setIsReviewModalOpen(true)
     } else {
       toast({
         title: `📋 Reviewing ${title}`,
         description: "Opening review details...",
-      });
+      })
     }
   }
 
-  const taskData = {
+  const statusReportTaskData = {
     emailSubject: "Project X Health Report Request",
     project: "Highway Expansion Phase 2",
     detectedIntent: "Generate Report",
@@ -81,6 +83,39 @@ We need the monthly health report for Project X (Highway Expansion Phase 2) for 
 Thanks,
 ABC LLC Project Team`,
     saveLocation: "Highway Expansion Phase 2 - health_reports"
+  }
+
+  const rfiTaskData = {
+    emailSubject: "RFI: Rebar Placement Conflict",
+    project: "Bridge Renovation",
+    detectedIntent: "Create RFI",
+    confidence: 89,
+    proposedAction: "Generate RFI form for rebar placement conflict at Pier 4, Section B",
+    draftContent: `RFI Form - Bridge Renovation Project
+
+Project: Bridge Renovation
+Contractor: Contractor XYZ
+Subject: RFI: Rebar Placement Conflict (Pay Item #12-345)
+
+Question:
+Per your request, please provide clarification on the rebar placement conflict at Pier 4, Section B, concerning Pay Item #12-345.
+
+The current drawings show conflicting rebar specifications that need to be resolved before we can proceed with the concrete pour scheduled for next week.`,
+    originalEmail: `From: contractor.xyz@email.com
+To: projectmanager@company.com
+Subject: Question about Pier 4 Rebar
+
+Hi Project Team,
+
+We've encountered an issue with the rebar placement at Pier 4, Section B. The drawings show conflicting specifications for Pay Item #12-345. Can you provide clarification?
+
+Thanks,
+Contractor XYZ`,
+    saveLocation: "Bridge Renovation - RFI_Forms"
+  }
+
+  const getCurrentTaskData = () => {
+    return currentReviewTask === "Suggested Action: Create RFI" ? rfiTaskData : statusReportTaskData
   }
 
   const statusReportDescription = (
@@ -252,7 +287,7 @@ ABC LLC Project Team`,
       <ReviewTaskModal
         isOpen={isReviewModalOpen}
         onClose={() => setIsReviewModalOpen(false)}
-        taskData={taskData}
+        taskData={getCurrentTaskData()}
       />
     </>
   )
