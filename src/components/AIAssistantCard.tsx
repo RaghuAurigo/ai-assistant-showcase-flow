@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { useToast } from "@/hooks/use-toast";
 interface AIAssistantCardProps {
   title: string;
   subtitle: string;
@@ -30,11 +31,23 @@ export function AIAssistantCard({
   className
 }: AIAssistantCardProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const [thumbsUpClicked, setThumbsUpClicked] = useState(false);
+  const { toast } = useToast();
+  
   const handlePrimaryAction = async () => {
     setIsLoading(true);
     await new Promise(resolve => setTimeout(resolve, 2000)); // 2 second delay
     onPrimaryAction();
     setIsLoading(false);
+  };
+
+  const handleThumbsUp = () => {
+    setThumbsUpClicked(true);
+    toast({
+      description: "I am glad I was able to help",
+      duration: 3000,
+    });
+    setTimeout(() => setThumbsUpClicked(false), 300);
   };
   return <Card className={cn("relative", className)}>
       {isLoading && <div className="absolute inset-0 bg-background/80 backdrop-blur-sm z-10 flex items-center justify-center rounded-lg">
@@ -77,7 +90,15 @@ export function AIAssistantCard({
             Delete
           </Button>
           <div className="flex-1" />
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className={cn(
+              "h-8 w-8 p-0 transition-all duration-300",
+              thumbsUpClicked && "animate-scale-in text-green-600"
+            )}
+            onClick={handleThumbsUp}
+          >
             <ThumbsUp className="h-4 w-4" />
           </Button>
           <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
