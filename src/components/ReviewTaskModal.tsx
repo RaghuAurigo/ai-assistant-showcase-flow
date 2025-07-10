@@ -151,13 +151,9 @@ export function ReviewTaskModal({ isOpen, onClose, taskData }: ReviewTaskModalPr
                 <X className="h-4 w-4 mr-2" />
                 Cancel
               </Button>
-              <Button variant="destructive" onClick={handleDiscard}>
-                <X className="h-4 w-4 mr-2" />
-                Discard
-              </Button>
-              <Button onClick={handleFinalize} className="bg-primary text-primary-foreground">
+              <Button onClick={handleFinalize} className="bg-primary text-primary-foreground hover:bg-primary/90">
                 <span className="mr-2">📋</span>
-                Finalize & Save
+                Send
               </Button>
             </div>
           </div>
