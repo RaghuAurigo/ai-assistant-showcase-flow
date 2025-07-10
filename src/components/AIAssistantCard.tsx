@@ -66,14 +66,17 @@ export function AIAssistantCard({
         
         
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={onReview}>
-            <Eye className="h-4 w-4" />
+          <Button variant="ghost" size="sm" className="h-8 px-3" onClick={onReview}>
+            <Eye className="h-4 w-4 mr-1" />
+            Review
           </Button>
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={onEdit}>
-            <Edit className="h-4 w-4" />
+          <Button variant="ghost" size="sm" className="h-8 px-3" onClick={onEdit}>
+            <Edit className="h-4 w-4 mr-1" />
+            Edit
           </Button>
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={onRemove}>
-            <Trash2 className="h-4 w-4" />
+          <Button variant="ghost" size="sm" className="h-8 px-3" onClick={onRemove}>
+            <Trash2 className="h-4 w-4 mr-1" />
+            Delete
           </Button>
           <div className="flex-1" />
           <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
